@@ -93,3 +93,17 @@ docs = [nlp.tokenizer(text) for text in texts]
 textcat = nlp.get_pipe('textcat')
 scores, _ = textcat.predict(docs)
 print(scores)
+
+doc = nlp(texts[0])
+person = set()
+if scores[0][0] < 0.5:
+    person.add("")
+else:
+    for X in doc.ents:
+        if X.label_ == 'PERSON':
+            person.add(X.text)
+
+print(list(person))
+
+##save model
+nlp.to_disk('AML')
